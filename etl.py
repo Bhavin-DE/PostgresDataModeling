@@ -3,7 +3,6 @@ import glob
 import psycopg2
 import pandas as pd
 from sql_queries import *
-%run create_tables.py
 
 conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
 cur = conn.cursor()
@@ -11,15 +10,14 @@ conn.set_session(autocommit=True)
 
 
 def process_song_file(cur, filepath):
-    """
-    This function will open song files and read it into Dataframe which will be 
-    then inserted into song and artist table
+    """Populate song and artist table by reading song files into dataframe
     
-    Input:
-    filepath: location of song file
+    Args:
+        cur: cursor object for database connection
+        filepath: location of raw song files
     
     Output:
-    tables: It will create song and artist dimension table along in postgres from song files.
+        song and artist dimension table
     """
     # open song file
     song_temp=open(filepath,"r")
@@ -32,16 +30,14 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    """
-    This function will open log files and read it into Dataframe which will be 
-    then inserted into time, user and songplay table
+    """Populate user,time and songplay tables by reading log files into dataframe
     
-    Input:
-    filepath: location of log file
+    Args:
+        cur: cursor object for database connection
+        filepath: location of raw log files
     
     Output:
-    tables: It will create time and user dimension table along with songplay fact table 
-            in postgres from log file.
+        User and time dimension table and songplay fact table
     """
     # open log file
     log_temp = open(filepath,"r")
@@ -90,18 +86,16 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
-    """
-    This function will put list of all json files with directory path
-    into list. 
+    """Process data and create tables based on source files
     
-    Input:
-    filepath: location of song file or log file
-    func: call song or log data processinng function
+    Args:
+        cur: cursor object for database connection
+        conn: database connection details
+        filepath: location of raw files
+        func: song and log files processing function
     
     Output:
-    all_files: list output with all files along with their path details
-    num_files: total number of files for each i.e. song, log
-    tables: by calling func function, it will create output tables in postgres
+        When called, executes other functions which then creates final tables
     """
     # get all files matching extension from directory
     all_files = []
@@ -123,6 +117,16 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+
+    """Main function to run other python functions
+    
+    Args:
+        N/A
+    
+    Output:
+        Creates database connection, fact and dimension tables 
+        by executing other python functions
+    """    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 

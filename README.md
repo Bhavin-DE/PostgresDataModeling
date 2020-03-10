@@ -19,12 +19,12 @@ Details about source files and final star schema data model is shown in separate
 - Read log files, Derive time related fields and create Users and Time dimension tables along with songplay fact table
 
 # Project Details:
-Following is the script order to run this project:
 
 1) sql_queries.py - This script includes queries as variables for drop,create and insert tables. No need to run this.
-2) create_tables.py - This script creates and calls functions for creating database, droping tables and creating tables. This script will be called from etl.ipynb and etl.py
-3) etl.ipynb - This script is for testing purpose which only process single file for song and log. After successfully running this script, can see test results using test.ipynb script.
-4) etl.py - This is the main script which is similar to etl.ipynb with minor changes so that it can process all the song and log files for creating song and log tables.
+2) create_tables.py - This script creates and calls functions for creating database, droping tables and creating tables. This script will be called from etl.ipynb and etl.py, so no need to run it separately.
+3) etl.ipynb - This script is for testing purpose which only process single file for song and log. After successfully running this script, can see test results using test.ipynb script. Please run this as 1st script for testing purpose.
+4) etl.py - After successful execution of etl.ipynb, this is the main script which process all the song and log files for creating song and log tables. run this script after successful completion of etl.ipynb
+5)test.ipynb - This is the test script to run some checks and analysis on newly created fact and dimension tables. It can be run after successful run of etl.py
 
 
 # Following Analysis queries can be run with designed datawarehouse to answer key questions about songs and artists
